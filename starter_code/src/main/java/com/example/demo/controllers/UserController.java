@@ -12,51 +12,64 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
 
-	private static final Logger log = LoggerFactory.getLogger(UserController.class);
-	
-	@Autowired
-	private UserRepository userRepository;
-	
-	@Autowired
-	private CartRepository cartRepository;
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private UserRepository userRepository;
 
-	@GetMapping("/id/{id}")
-	public ResponseEntity<User> findById(@PathVariable Long id) {
-		return ResponseEntity.of(userRepository.findById(id));
-	}
-	
-	@GetMapping("/{username}")
-	public ResponseEntity<User> findByUserName(@PathVariable String username) {
-		User user = userRepository.findByUsername(username);
-		return user == null ? ResponseEntity.notFound().build() : ResponseEntity.ok(user);
-	}
-	
-	@PostMapping("/create")
-	public ResponseEntity<User> createUser(@RequestBody CreateUserRequest createUserRequest) {
-		User user = new User();
-		user.setUsername(createUserRequest.getUsername());
-		log.info("User name set with {}.", createUserRequest.getUsername());
-		Cart cart = new Cart();
+    @Autowired
+    private CartRepository cartRepository;
 
-		user.setCart(cart);
-		if(createUserRequest.getPassword().length()<7 ||
-				!createUserRequest.getPassword().equals(createUserRequest.getConfirmPassword())){
-			log.error("Error - Either length is less than 7 or pass and conf pass do not match. Unable to create {}.", createUserRequest.getUsername());
-			return ResponseEntity.badRequest().build();
-		}
-		user.setPassword(bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
-		user.setCart(cart);
-		userRepository.save(user);
-		cartRepository.save(cart);
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-		return ResponseEntity.ok(user);
-	}
-	
+    @GetMapping("/id/{id}")
+    public ResponseEntity<User> findById(@PathVariable Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (!userOptional.isPresent()) {
+            log.debug("User with id: {} not found.", id);
+            return ResponseEntity.notFound().build();
+        }
+        log.debug("User found: ", userOptional.get());
+        return ResponseEntity.ok(userOptional.get());
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<User> findByUserName(@PathVariable String username) {
+        User user = userRepository.findByUsername(username);
+        if (user != null) {
+            log.debug("User found: ", user.getUsername());
+            return ResponseEntity.ok(user);
+        }
+        log.debug("User with username: {} not found.", username);
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<User> createUser(@RequestBody CreateUserRequest createUserRequest) {
+        User user = new User();
+        user.setUsername(createUserRequest.getUsername());
+        log.info("User name set with {}.", createUserRequest.getUsername());
+        Cart cart = new Cart();
+
+        user.setCart(cart);
+        if (createUserRequest.getPassword().length() < 7 ||
+                !createUserRequest.getPassword().equals(createUserRequest.getConfirmPassword())) {
+            log.error("Error - Either length is less than 7 or pass and conf pass do not match. Unable to create {}.", createUserRequest.getUsername());
+            return ResponseEntity.badRequest().build();
+        }
+        user.setPassword(bCryptPasswordEncoder.encode(createUserRequest.getPassword()));
+        user.setCart(cart);
+        userRepository.save(user);
+        cartRepository.save(cart);
+        log.debug("User {} created successfully.", user.getUsername());
+        return ResponseEntity.ok(user);
+    }
+
 }
