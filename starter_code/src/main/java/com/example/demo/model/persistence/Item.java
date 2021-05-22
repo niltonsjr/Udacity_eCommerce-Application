@@ -34,7 +34,7 @@ public class Item {
 	@Column(nullable = false)
 	@JsonProperty
 	private String description;
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
