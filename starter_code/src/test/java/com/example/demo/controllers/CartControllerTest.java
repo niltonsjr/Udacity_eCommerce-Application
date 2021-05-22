@@ -82,7 +82,7 @@ public class CartControllerTest {
         modifyCartRequest.setItemId(1L);
         modifyCartRequest.setQuantity(1);
 
-        ResponseEntity<Cart> response = cartController.addTocart(modifyCartRequest);
+        ResponseEntity<Cart> response = cartController.addToCart(modifyCartRequest);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue());
@@ -97,7 +97,7 @@ public class CartControllerTest {
     public void testAddToCartInvalidUserNameShouldReturnNotFoundResponse() {
         modifyCartRequest.setUsername(incorrectUsername);
 
-        ResponseEntity<Cart> response = cartController.addTocart(modifyCartRequest);
+        ResponseEntity<Cart> response = cartController.addToCart(modifyCartRequest);
 
         assertNotNull(response);
         assertEquals(404, response.getStatusCodeValue());
@@ -108,7 +108,7 @@ public class CartControllerTest {
         modifyCartRequest.setUsername(correctUsername);
         modifyCartRequest.setItemId(incorrectItemId);
 
-        ResponseEntity<Cart> response = cartController.addTocart(modifyCartRequest);
+        ResponseEntity<Cart> response = cartController.addToCart(modifyCartRequest);
 
         assertNotNull(response);
         assertEquals(404, response.getStatusCodeValue());
@@ -120,7 +120,7 @@ public class CartControllerTest {
         modifyCartRequest.setItemId(1L);
         modifyCartRequest.setQuantity(1);
 
-        ResponseEntity<Cart> response = cartController.removeFromcart(modifyCartRequest);
+        ResponseEntity<Cart> response = cartController.removeFromCart(modifyCartRequest);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue());
@@ -129,6 +129,27 @@ public class CartControllerTest {
         assertNotNull(cartResponse);
         assertEquals(correctUsername, cartResponse.getUser().getUsername());
         assertTrue(cartResponse.getItems().isEmpty());
+    }
+
+    @Test
+    public void testRemoveFromCartInvalidUserShouldReturnNotFound() {
+        modifyCartRequest.setUsername(incorrectUsername);
+
+        ResponseEntity<Cart> response = cartController.removeFromCart(modifyCartRequest);
+
+        assertNotNull(response);
+        assertEquals(404, response.getStatusCodeValue());
+    }
+
+    @Test
+    public void testRemoveFromCartItemIdShouldReturnNotFound() {
+        modifyCartRequest.setUsername(correctUsername);
+        modifyCartRequest.setItemId(2L);
+
+        ResponseEntity<Cart> response = cartController.removeFromCart(modifyCartRequest);
+
+        assertNotNull(response);
+        assertEquals(404, response.getStatusCodeValue());
     }
 
 }
