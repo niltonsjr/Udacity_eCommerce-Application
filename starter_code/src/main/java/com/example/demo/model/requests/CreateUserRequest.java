@@ -21,14 +21,18 @@ public class CreateUserRequest {
 		this.username = username;
 	}
 
+<<<<<<< HEAD
 	public String getPassword() {
 		return password;
 	}
 
+=======
+>>>>>>> 1.Auth
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+<<<<<<< HEAD
 	public String getConfirmPassword() {
 		return confirmPassword;
 	}
@@ -36,4 +40,16 @@ public class CreateUserRequest {
 	public void setConfirmPassword(String confirmPassword) {
 		this.confirmPassword = confirmPassword;
 	}
+=======
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+	public String getPassword() {
+		return password;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+>>>>>>> 1.Auth
 }
