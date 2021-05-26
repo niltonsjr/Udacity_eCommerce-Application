@@ -23,11 +23,9 @@ import static org.mockito.Mockito.when;
 
 public class OrderControllerTest {
 
+    private final UserRepository userRepository = mock(UserRepository.class);
+    private final OrderRepository orderRepository = mock(OrderRepository.class);
     private OrderController orderController;
-
-    private UserRepository userRepository = mock(UserRepository.class);
-    private OrderRepository orderRepository = mock(OrderRepository.class);
-
     private User user;
 
     @Before
@@ -59,7 +57,7 @@ public class OrderControllerTest {
         List<UserOrder> userOrders = Lists.list(UserOrder.createFromCart(user.getCart()));
 
         when(userRepository.findByUsername(user.getUsername())).thenReturn(user);
-        when(orderRepository.findByUser(user)).thenReturn((List<UserOrder>) userOrders);
+        when(orderRepository.findByUser(user)).thenReturn(userOrders);
     }
 
     @Test

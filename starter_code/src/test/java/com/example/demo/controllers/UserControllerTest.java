@@ -21,10 +21,10 @@ import static org.mockito.Mockito.when;
 
 public class UserControllerTest {
 
+    private final UserRepository userRepository = mock(UserRepository.class);
+    private final CartRepository cartRepository = mock(CartRepository.class);
+    private final BCryptPasswordEncoder encoder = mock(BCryptPasswordEncoder.class);
     private UserController userController;
-    private UserRepository userRepository = mock(UserRepository.class);
-    private CartRepository cartRepository = mock(CartRepository.class);
-    private BCryptPasswordEncoder encoder = mock(BCryptPasswordEncoder.class);
 
     @Before
     public void setUp() {
@@ -35,7 +35,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void createUserHappyPath() throws Exception {
+    public void createUserHappyPath() {
         when(encoder.encode("testPassword")).thenReturn("thisIsHashed");
 
         CreateUserRequest cur = new CreateUserRequest();
@@ -56,7 +56,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testCreateUserPasswordLengthLessThanSevenCharactersReturnsBadRequest(){
+    public void testCreateUserPasswordLengthLessThanSevenCharactersReturnsBadRequest() {
         CreateUserRequest cur = new CreateUserRequest();
         cur.setUsername("test");
         cur.setPassword("pass");
@@ -69,7 +69,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testCreateUserPasswordIsDifferentOfConfirmPasswordReturnsBadRequest(){
+    public void testCreateUserPasswordIsDifferentOfConfirmPasswordReturnsBadRequest() {
         CreateUserRequest cur = new CreateUserRequest();
         cur.setUsername("test");
         cur.setPassword("pass");
@@ -82,7 +82,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testFindUserByUsernameReturnUserWhenUserExists(){
+    public void testFindUserByUsernameReturnUserWhenUserExists() {
         User userCreated = new User();
         userCreated.setUsername("test");
         userCreated.setPassword("password");
@@ -99,7 +99,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testFindUserByIdReturnUserWhenUserExists(){
+    public void testFindUserByIdReturnUserWhenUserExists() {
         User userCreated = new User();
         userCreated.setUsername("test");
         userCreated.setPassword("password");

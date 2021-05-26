@@ -39,7 +39,7 @@ public class UserController {
             log.debug("User with id: {} not found.", id);
             return ResponseEntity.notFound().build();
         }
-        log.debug("User found: ", userOptional.get());
+        log.debug("User found: ", userOptional.get().getUsername());
         return ResponseEntity.ok(userOptional.get());
     }
 

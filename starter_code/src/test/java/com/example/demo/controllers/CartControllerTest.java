@@ -23,20 +23,15 @@ import static org.mockito.Mockito.when;
 
 public class CartControllerTest {
 
+    private final UserRepository userRepository = mock(UserRepository.class);
+    private final CartRepository cartRepository = mock(CartRepository.class);
+    private final ItemRepository itemRepository = mock(ItemRepository.class);
+    private final String correctUsername = "UsernameTest";
+    private final String incorrectUsername = "incorrectUsername";
+    private final String itemName = "itemTest";
+    private final long incorrectItemId = 2L;
     private CartController cartController;
-    private UserRepository userRepository = mock(UserRepository.class);
-    private CartRepository cartRepository = mock(CartRepository.class);
-    private ItemRepository itemRepository = mock(ItemRepository.class);
-
     private ModifyCartRequest modifyCartRequest;
-
-    private String correctUsername = "UsernameTest";
-    private String incorrectUsername = "incorrectUsername";
-    private String password = "PasswordTest";
-    private String itemName = "itemTest";
-
-    private long correctItemId = 1L;
-    private long incorrectItemId = 2L;
 
     public CartControllerTest() {
     }
@@ -52,6 +47,7 @@ public class CartControllerTest {
 
         User user = new User();
         user.setUsername(correctUsername);
+        String password = "PasswordTest";
         user.setPassword(password);
 
         Cart cart = new Cart();
@@ -72,6 +68,7 @@ public class CartControllerTest {
         when(userRepository.findByUsername(correctUsername)).thenReturn(user);
         when(userRepository.findByUsername(incorrectUsername)).thenReturn(null);
 
+        long correctItemId = 1L;
         when(itemRepository.findById(correctItemId)).thenReturn(Optional.of(itemTest));
         when(itemRepository.findById(incorrectItemId)).thenReturn(Optional.empty());
     }
@@ -82,7 +79,7 @@ public class CartControllerTest {
         modifyCartRequest.setItemId(1L);
         modifyCartRequest.setQuantity(1);
 
-        ResponseEntity<Cart> response = cartController.addToCart(modifyCartRequest);
+        ResponseEntity<Cart> response = cartController.addTocart(modifyCartRequest);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue());
@@ -97,7 +94,7 @@ public class CartControllerTest {
     public void testAddToCartInvalidUserNameShouldReturnNotFoundResponse() {
         modifyCartRequest.setUsername(incorrectUsername);
 
-        ResponseEntity<Cart> response = cartController.addToCart(modifyCartRequest);
+        ResponseEntity<Cart> response = cartController.addTocart(modifyCartRequest);
 
         assertNotNull(response);
         assertEquals(404, response.getStatusCodeValue());
@@ -108,7 +105,7 @@ public class CartControllerTest {
         modifyCartRequest.setUsername(correctUsername);
         modifyCartRequest.setItemId(incorrectItemId);
 
-        ResponseEntity<Cart> response = cartController.addToCart(modifyCartRequest);
+        ResponseEntity<Cart> response = cartController.addTocart(modifyCartRequest);
 
         assertNotNull(response);
         assertEquals(404, response.getStatusCodeValue());
@@ -120,7 +117,7 @@ public class CartControllerTest {
         modifyCartRequest.setItemId(1L);
         modifyCartRequest.setQuantity(1);
 
-        ResponseEntity<Cart> response = cartController.removeFromCart(modifyCartRequest);
+        ResponseEntity<Cart> response = cartController.removeFromcart(modifyCartRequest);
 
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue());
@@ -135,7 +132,7 @@ public class CartControllerTest {
     public void testRemoveFromCartInvalidUserShouldReturnNotFound() {
         modifyCartRequest.setUsername(incorrectUsername);
 
-        ResponseEntity<Cart> response = cartController.removeFromCart(modifyCartRequest);
+        ResponseEntity<Cart> response = cartController.removeFromcart(modifyCartRequest);
 
         assertNotNull(response);
         assertEquals(404, response.getStatusCodeValue());
@@ -146,7 +143,7 @@ public class CartControllerTest {
         modifyCartRequest.setUsername(correctUsername);
         modifyCartRequest.setItemId(2L);
 
-        ResponseEntity<Cart> response = cartController.removeFromCart(modifyCartRequest);
+        ResponseEntity<Cart> response = cartController.removeFromcart(modifyCartRequest);
 
         assertNotNull(response);
         assertEquals(404, response.getStatusCodeValue());

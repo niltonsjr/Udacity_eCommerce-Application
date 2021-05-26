@@ -20,18 +20,11 @@ import static org.mockito.Mockito.when;
 
 public class ItemControllerTest {
 
+    private final ItemRepository itemRepository = mock(ItemRepository.class);
+    private final String item1Name = "itemTest";
+    private final String item2Name = "itemTest2";
+    private final String item1Description = "Item One Test Description";
     private ItemController itemController;
-
-    private ItemRepository itemRepository = mock(ItemRepository.class);
-
-    private String item1Name = "itemTest";
-    private String item2Name = "itemTest2";
-    private String wrongItemName = "itemNameWrong";
-    private String item1Description = "Item One Test Description";
-    private String item2Description = "Item Two Test Description";
-    private long correctItem1Id = 1L;
-    private long correctItem2Id = 2L;
-    private long incorrectItemId = 20L;
 
     @Before
     public void setUp() {
@@ -41,6 +34,7 @@ public class ItemControllerTest {
 
         List<Item> itemList = new ArrayList<>();
         Item itemTest1 = new Item();
+        long correctItem1Id = 1L;
         itemTest1.setId(correctItem1Id);
         itemTest1.setName(item1Name);
         itemTest1.setPrice(BigDecimal.valueOf(1.5));
@@ -48,9 +42,11 @@ public class ItemControllerTest {
         itemList.add(itemTest1);
 
         Item itemTest2 = new Item();
+        long correctItem2Id = 2L;
         itemTest2.setId(correctItem2Id);
         itemTest2.setName(item2Name);
         itemTest2.setPrice(BigDecimal.valueOf(1.5));
+        String item2Description = "Item Two Test Description";
         itemTest2.setDescription(item2Description);
         itemList.add(itemTest2);
 
@@ -83,6 +79,7 @@ public class ItemControllerTest {
 
     @Test
     public void testGetItemByWrongNameShouldReturnNotFound() {
+        String wrongItemName = "itemNameWrong";
         ResponseEntity<List<Item>> response = itemController.getItemsByName(wrongItemName);
 
         assertNotNull(response);

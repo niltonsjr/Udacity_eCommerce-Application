@@ -1,0 +1,21 @@
+2021-05-26 20:30:52,079 DEBUG c.e.d.c.UserController [main] User with username: incorrectUsername not found.
+2021-05-26 20:30:52,101 DEBUG c.e.d.c.UserController [main] Cart with id: null updated successfully.
+2021-05-26 20:30:52,102 DEBUG c.e.d.c.UserController [main] User with username: incorrectUsername not found.
+2021-05-26 20:30:52,103 DEBUG c.e.d.c.UserController [main] Item with id: 2 not found.
+2021-05-26 20:30:52,104 DEBUG c.e.d.c.UserController [main] Cart with id: null saved successfully.
+2021-05-26 20:30:52,105 DEBUG c.e.d.c.UserController [main] Item with id: 2 not found.
+2021-05-26 20:30:52,106 DEBUG c.e.d.c.UserController [main] Item with name: itemTest found.
+2021-05-26 20:30:52,107 DEBUG c.e.d.c.UserController [main] Item with name: itemNameWrong not found.
+2021-05-26 20:30:52,108 DEBUG c.e.d.c.UserController [main] Item with id: 1 found.
+2021-05-26 20:30:52,131 DEBUG c.e.d.c.UserController [main] Order null created successfully.
+2021-05-26 20:30:52,132 DEBUG c.e.d.c.UserController [main] Order from user with username: TestUsername found.
+2021-05-26 20:30:52,132 DEBUG c.e.d.c.UserController [main] User with username: InvalidUserName not found.
+2021-05-26 20:30:52,133 DEBUG c.e.d.c.UserController [main] User with username: InvalidUserName not found.
+2021-05-26 20:30:52,148 DEBUG c.e.d.c.UserController [main] User found: 
+2021-05-26 20:30:52,148 DEBUG c.e.d.c.UserController [main] User found: 
+2021-05-26 20:30:52,151 INFO c.e.d.c.UserController [main] User name set with test.
+2021-05-26 20:30:52,151 ERROR c.e.d.c.UserController [main] Error - Either length is less than 7 or pass and conf pass do not match. Unable to create test.
+2021-05-26 20:30:52,152 INFO c.e.d.c.UserController [main] User name set with test.
+2021-05-26 20:30:52,152 ERROR c.e.d.c.UserController [main] Error - Either length is less than 7 or pass and conf pass do not match. Unable to create test.
+2021-05-26 20:30:52,154 INFO c.e.d.c.UserController [main] User name set with test.
+2021-05-26 20:30:52,154 DEBUG c.e.d.c.UserController [main] User test created successfully.

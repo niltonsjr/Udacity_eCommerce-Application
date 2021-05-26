@@ -20,7 +20,6 @@ import static com.auth0.jwt.algorithms.Algorithm.HMAC512;
 
 @Component
 public class JWTAuthenticationVerficationFilter extends BasicAuthenticationFilter {
-<<<<<<< HEAD
 
     public JWTAuthenticationVerficationFilter(AuthenticationManager authManager) {
         super(authManager);
@@ -29,16 +28,6 @@ public class JWTAuthenticationVerficationFilter extends BasicAuthenticationFilte
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws IOException, ServletException {
-=======
-	
-	public JWTAuthenticationVerficationFilter(AuthenticationManager authManager) {
-        super(authManager);
-    }
-	
-	@Override
-    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) 
-    		throws IOException, ServletException {
->>>>>>> 1.Auth
         String header = req.getHeader(SecurityConstants.HEADER_STRING);
 
         if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
@@ -52,13 +41,8 @@ public class JWTAuthenticationVerficationFilter extends BasicAuthenticationFilte
         chain.doFilter(req, res);
     }
 
-<<<<<<< HEAD
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest req) {
         String token = req.getHeader(SecurityConstants.HEADER_STRING);
-=======
-	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest req) {
-		String token = req.getHeader(SecurityConstants.HEADER_STRING);
->>>>>>> 1.Auth
         if (token != null) {
             String user = JWT.require(HMAC512(SecurityConstants.SECRET.getBytes())).build()
                     .verify(token.replace(SecurityConstants.TOKEN_PREFIX, ""))
@@ -69,12 +53,6 @@ public class JWTAuthenticationVerficationFilter extends BasicAuthenticationFilte
             return null;
         }
         return null;
-<<<<<<< HEAD
     }
 
 }
-=======
-	}
-
-}
->>>>>>> 1.Auth
